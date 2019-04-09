@@ -22,6 +22,7 @@ namespace Weather
         public MainWindow()
         {
             InitializeComponent();
+            nameList = AppInfo.GetCities();
             string dateNow = DateTime.Now.ToString("HH");
             int hour = Int32.Parse(dateNow);
             if(hour > 18 || hour < 7)
@@ -39,7 +40,8 @@ namespace Weather
 
             loadAPI(AppInfo.Current_city);
 
-            
+            search.TextChanged += new System.Windows.Controls.TextChangedEventHandler(Search_TextChanged);
+
         }
 
         private  void Search_KeyDown(object sender, KeyEventArgs e)
@@ -51,7 +53,7 @@ namespace Weather
             string searchInput = search.Text.Trim().ToLower();
 
             loadAPI(searchInput);
-
+            
             //History
             e.Handled = true;
             History history = new History();
@@ -66,6 +68,8 @@ namespace Weather
             File.AppendAllText(historyPath, search.Text.Trim() + "\n");
             string s = DateTime.Now.ToString();
             File.AppendAllText(historyPath, s.Trim() + "\n");
+
+            search.Text = "";
 
 
         }
@@ -75,6 +79,7 @@ namespace Weather
             string searchInput = search.Text.Trim().ToLower();
 
             loadAPI(searchInput);
+            
             //History
             e.Handled = true;
             History history = new History();
@@ -90,6 +95,7 @@ namespace Weather
             string s = DateTime.Now.ToString();
             File.AppendAllText(historyPath, s.Trim() + "\n");
 
+            search.Text = "";
         }
 
         public void GetLocationProperty()
@@ -595,6 +601,57 @@ namespace Weather
             }
             bookmarkImage.Source = GetImage("resources/bookmark.png");
             return false;
+        }
+
+        private void Suggestion_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (suggestion.ItemsSource != null)
+            {
+                suggestion.Visibility = Visibility.Collapsed;
+                search.TextChanged -= new System.Windows.Controls.TextChangedEventHandler(Search_TextChanged);
+                if (suggestion.SelectedIndex != -1)
+                {
+                    search.Text = suggestion.SelectedItem.ToString();
+                }
+                search.TextChanged += new System.Windows.Controls.TextChangedEventHandler(Search_TextChanged);
+            }
+        }
+
+        private void Search_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            string typedString = search.Text;
+            List<string> autoList = new List<string>();
+            autoList.Clear();
+            foreach (string item in nameList)
+            {
+                if (!string.IsNullOrEmpty(search.Text))
+                {
+                    if (item.ToLower().StartsWith(typedString.ToLower()))
+                    {
+                        autoList.Add(item);
+                        if (autoList.Count == 5)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (autoList.Count > 0)
+            {
+                suggestion.ItemsSource = autoList;
+                suggestion.Visibility = Visibility.Visible;
+            }
+            else if (search.Text.Equals(""))
+            {
+                suggestion.Visibility = Visibility.Collapsed;
+                suggestion.ItemsSource = null;
+            }
+            else
+            {
+                suggestion.Visibility = Visibility.Collapsed;
+                suggestion.ItemsSource = null;
+            }
         }
 
     }

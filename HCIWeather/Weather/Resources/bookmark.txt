@@ -1,8 +1,9 @@
-Barcelona
 Novi Sad
 Tokyo
 Boston
-Dubai
 Abu Dhabi
-Berlin
 Munich
+Melbourne
+Berlin
+Beijing
+Barcelona

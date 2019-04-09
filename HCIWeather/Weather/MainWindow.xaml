@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Weather"
         mc:Ignorable="d"
-        Title="Weather" Height="700" Width="1000" Icon="/resources/appIcon.png" MinWidth="630" MinHeight="600">
+        Title="Weather" Height="700" Width="1000" Icon="/resources/appIcon.png" MinWidth="630" MinHeight="650">
     <Window.Resources>
         <SolidColorBrush x:Key="dailyDarkColor" Color="Black" Opacity="0.45"></SolidColorBrush>
         <SolidColorBrush x:Key="dailyLightColor" Color="Black" Opacity="0.12"></SolidColorBrush>
@@ -14,17 +14,16 @@
         <ImageBrush ImageSource="Resources/sky.jpg"/>
     </Window.Background>
     <DockPanel>
-        
-		<Grid DockPanel.Dock="Top">
+
+        <Grid DockPanel.Dock="Top">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity="0.4" />
             </Grid.Background>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -32,7 +31,7 @@
                 <ColumnDefinition Width="10*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
             <Button x:Name="allBookmarks" Grid.Column="0" Grid.Row="0" Click="AllBookmarks_Click">
                 <Button.Background>
@@ -83,7 +82,7 @@
                 <TextBox.Background>
                     <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
                 </TextBox.Background>
-                
+
             </TextBox>
             <Button x:Name="searchBtn" Grid.Column="6" Grid.Row="0" Click="SearchClickFun" >
                 <Button.Background>
@@ -96,31 +95,37 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
+
         </Grid>
 
-		<Grid DockPanel.Dock="Bottom">
-			<Grid.RowDefinitions>
-				<RowDefinition x:Name="currentForecastPanel" Height="6*"></RowDefinition>
-				<RowDefinition x:Name="dailyPanel" Height="Auto"></RowDefinition>
-				<RowDefinition x:Name="nextFewDaysPanel" Height="4*"></RowDefinition>
-				<RowDefinition x:Name="hourlyPanel" Height="Auto"></RowDefinition>
-				<RowDefinition x:Name="hourlyForecastPanel" Height="3*"></RowDefinition>
-			</Grid.RowDefinitions>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="currentForecastPanel" Height="6*"></RowDefinition>
+                <RowDefinition x:Name="dailyPanel" Height="Auto"></RowDefinition>
+                <RowDefinition x:Name="nextFewDaysPanel" Height="4*"></RowDefinition>
+                <RowDefinition x:Name="hourlyPanel" Height="Auto"></RowDefinition>
+                <RowDefinition x:Name="hourlyForecastPanel" Height="3*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-			<Grid Grid.Row="0" Margin="0,20,0,0">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
 
-                <Grid Grid.Column="1">
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="4">
                     <Grid.Background>
                         <SolidColorBrush Color="Black" Opacity="0.02" />
                     </Grid.Background>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="3*"></RowDefinition>
-						<RowDefinition Height="3*"></RowDefinition>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
 
@@ -135,16 +140,21 @@
                     <Label x:Name="currentForecastStatus" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" FontSize="25" Foreground="White">Mostly Sunny</Label>
                     <Label x:Name="currentForecastInfo" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" FontSize="13" Foreground="White" >Last update at 14:25</Label>
                 </Grid>
-			</Grid>
+                <ListBox x:Name="suggestion" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="130" Grid.Column="5" Grid.Row="1" Foreground="White" FontSize="13" SelectionChanged="Suggestion_SelectionChanged" Visibility="Collapsed" >
+                    <ListBox.Background>
+                        <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
+                    </ListBox.Background>
+                </ListBox>
+            </Grid>
 
             <Label x:Name="daily" HorizontalAlignment="Left" Grid.Row="1" Content="Daily" FontSize="21" Foreground="White"></Label>
 
             <Grid Grid.Row="2">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
@@ -153,12 +163,12 @@
                         <SolidColorBrush Color="Black" Opacity="0.45" />
                     </Grid.Background>
                     <Grid.RowDefinitions>
-						<RowDefinition Height="2*"></RowDefinition>
-						<RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
-					</Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -169,7 +179,7 @@
                     <Label x:Name="Day1Max" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="21" VerticalAlignment="Bottom">20°C</Label>
                     <Label x:Name="Day1Min" Grid.Row="2" Grid.Column="1" HorizontalAlignment="left" Foreground="White" Opacity="0.8" FontSize="17" VerticalAlignment="Bottom">10°C</Label>
                     <Label x:Name="Day1Description" HorizontalAlignment="Center" Grid.Row="3" Foreground="White" FontSize="15" Grid.ColumnSpan="2">Mostly sunny</Label>
-				</Grid>
+                </Grid>
                 <Grid x:Name="grid2" Grid.Column="1" Margin="5" UIElement.PreviewMouseDown="Grid2_PreviewMouseDown">
                     <Grid.Background>
                         <SolidColorBrush Color="Black" Opacity="0.12" />
@@ -262,25 +272,25 @@
 
             <Label x:Name="hourly" HorizontalAlignment="Left" Grid.Row="3" Content="Hourly" FontSize="21" Foreground="White"></Label>
 
-			<Grid Grid.Row="4">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-				<Grid Grid.Column="0" Margin="3">
+                <Grid Grid.Column="0" Margin="3">
                     <Grid.Background>
                         <SolidColorBrush Color="Black" Opacity="0.45" />
                     </Grid.Background>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="1*"></RowDefinition>
-						<RowDefinition Height="1*"></RowDefinition>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -402,8 +412,8 @@
                     <Label x:Name="Detail8Description"  Grid.Row="2" HorizontalAlignment="Left" Foreground="White" FontSize="11">Partly Sunny</Label>
                     <Label x:Name="Detail8Time"  Grid.Row="3" HorizontalAlignment="Left" Foreground="White" FontSize="13">19:00</Label>
                 </Grid>
-                
+
             </Grid>
-		</Grid>
-	</DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>

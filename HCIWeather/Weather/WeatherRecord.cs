@@ -44,8 +44,27 @@ namespace Weather
             return string.Format("http://api.openweathermap.org/data/2.5/forecast?lat={0}&lon={1}&appid={2}&units=metric", lat, lon, API_KEY);
         }
 
-        
 
+        public static List<string> GetCities()
+        {
+            List<City> cities = new List<City>();
+            if (File.Exists(citiesPath))
+            {
+                string citiesJSON = File.ReadAllText(citiesPath);
+                cities = JsonConvert.DeserializeObject<List<City>>(citiesJSON);
+
+            }
+            List<string> allCities = new List<string>();
+            foreach (City item in cities)
+            {
+                if (item.Name.Equals("North America") || item.Name.Equals("South America"))
+                {
+                    continue;
+                }
+                allCities.Add(item.Name);
+            }
+            return allCities;
+        }
 
         public static string getIconURL(string name)
         {
