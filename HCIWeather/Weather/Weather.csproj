@@ -78,8 +78,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bookmark.cs" />
+    <Compile Include="BookmarkWindow.xaml.cs">
+      <DependentUpon>BookmarkWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WeatherProcess.cs" />
     <Compile Include="WeatherRecord.cs" />
+    <Page Include="BookmarkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\favouritee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\bookmark.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

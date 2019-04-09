@@ -16,8 +16,7 @@ namespace Weather
     public partial class MainWindow : Window
     {
 
-        
-
+        private readonly string bookmarkPath = Path.GetFullPath(@"..\..\") + @"resources\bookmark.txt";
         public List<string> nameList { get; set; }
 
         public MainWindow()
@@ -77,6 +76,7 @@ namespace Weather
         public async void loadAPI(string searchInput)
         {
 
+            checkFavourite(searchInput);
 
             BasicWeatherRecord bwr = null;
             DetailWeatherRecord dwr = null;
@@ -474,7 +474,73 @@ namespace Weather
             return bitmapImage;
         }
 
-        
-       
+        private void Bookmark_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            string bookmarkCity = cityName.Content.ToString();
+            string[] lista = bookmarkCity.Split(',');
+            Bookmark bookmark = new Bookmark();
+            HashSet<BookmarkData> bookmarkList = bookmark.getHistory();
+
+            if (bookmarkImage.Source.ToString() == "pack://application:,,,/resources/bookmark.png")
+            {
+                bookmarkImage.Source = GetImage("resources/bookmarked.png");
+            }
+            else
+            {
+                bookmarkImage.Source = GetImage("resources/bookmark.png");
+            }
+            Boolean check = false;
+            foreach (BookmarkData item in bookmarkList)
+            {
+                if (item.CityName.Trim().ToLower().Equals(lista[0].Trim().ToLower()))
+                {
+                    check = true;
+                    bookmarkList.Remove(item);
+                    break;
+
+                }
+            }
+            if (!check)
+            {
+                File.AppendAllText(bookmarkPath, lista[0].Trim() + "\n");
+            }
+            else
+            {
+
+                File.WriteAllText(bookmarkPath, String.Empty);
+                foreach (BookmarkData item in bookmarkList)
+                {
+                    File.AppendAllText(bookmarkPath, item.CityName + "\n");
+                }
+
+            }
+        }
+
+        private void AllBookmarks_Click(object sender, RoutedEventArgs e)
+        {
+            string currentLocation = cityName.Content.ToString();
+            List<string> currentCityList = currentLocation.Split(',').ToList<string>();
+            AppInfo.Current_city = currentCityList[0];
+            BookmarkWindow win2 = new BookmarkWindow();
+            win2.Show();
+            this.Close();
+        }
+
+        public bool checkFavourite(string city)
+        {
+            Bookmark bookmark = new Bookmark();
+            foreach (BookmarkData item in bookmark.getHistory())
+            {
+                if (item.CityName.Trim().ToLower().Equals(city.Trim().ToLower()))
+                {
+                    bookmarkImage.Source = GetImage("resources/bookmarked.png");
+                    return true;
+                }
+            }
+            bookmarkImage.Source = GetImage("resources/bookmark.png");
+            return false;
+        }
+
     }
 }

@@ -33,8 +33,30 @@
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
-            
-            <Button x:Name="refresh" Grid.Column="0" Grid.Row="0"  Click="Refresh_Click" >
+
+            <Button x:Name="allBookmarks" Grid.Column="0" Grid.Row="0" Click="AllBookmarks_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Bookmark list
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="/resources/favouritee.png" Width="20"></Image>
+            </Button>
+            <Button x:Name="bookmark" Grid.Column="1" Grid.Row="0" Click="Bookmark_Click_1">
+                <Button.Background>
+                    <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        Bookmark
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image x:Name="bookmarkImage" Source="/resources/favourite.png" Width="20"></Image>
+            </Button>
+            <Button x:Name="refresh" Grid.Column="2" Grid.Row="0"  Click="Refresh_Click" >
                 <Button.Background>
                     <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
                 </Button.Background>
@@ -45,6 +67,7 @@
                 </Button.ToolTip>
                 <Image Source="/resources/refresh.png" Width="20"></Image>
             </Button>
+            
             <TextBox x:Name="search" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Grid.Column="5" Grid.Row="0" KeyDown="Search_KeyDown"  Foreground="White" FontSize="13" >
                 <TextBox.Background>
                     <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
