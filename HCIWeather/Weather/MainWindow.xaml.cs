@@ -22,6 +22,14 @@ namespace Weather
         public MainWindow()
         {
             InitializeComponent();
+            string dateNow = DateTime.Now.ToString("HH");
+            int hour = Int32.Parse(dateNow);
+            if(hour > 18 || hour < 7)
+            {
+                ImageBrush myBrush = new ImageBrush();
+                myBrush.ImageSource = GetImage("resources/nightSky.jpg");
+                window.Background = myBrush;
+            }
             
             AppInfo.InitializeClient();
             if (AppInfo.Current_city.Equals(""))
@@ -84,21 +92,20 @@ namespace Weather
 
         }
 
-        public static void GetLocationProperty()
+        public void GetLocationProperty()
         {
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
 
-            watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
+            watcher.PositionChanged += watcher_PositionChanged;
 
-            GeoCoordinate coord = watcher.Position.Location;
+            watcher.Start();
 
-            if (coord.IsUnknown != true){
-                AppInfo.city_lat = coord.Latitude;
-                AppInfo.city_lon = coord.Longitude;
-            }else{
-                
-                Console.WriteLine("Unknown latitude and longitude.");
-            }
+        }
+
+        private void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        {
+            AppInfo.city_lat = e.Position.Location.Latitude;
+            AppInfo.city_lon = e.Position.Location.Longitude;
         }
 
         public async void loadAPI(string searchInput)
@@ -107,10 +114,12 @@ namespace Weather
             checkFavourite(searchInput);
 
             BasicWeatherRecord bwr = null;
+            BasicWeatherRecord bwrT = null;
             DetailWeatherRecord dwr = null;
 
             if (searchInput.Equals(""))
             {
+                bwrT = await WeatherProcess.LoadBasicWeatherRecordCoord();
                 bwr = await WeatherProcess.LoadBasicWeatherRecordCoord();
                 dwr = await WeatherProcess.LoadDetailWeatherRecordCoord();
             }
@@ -244,7 +253,15 @@ namespace Weather
             Detail8Description.Content = dwr.Records[7].Weathers[0].Main;
             Detail8Time.Content = dwr.Records[7].time.Substring(dwr.Records[7].time.Length - 8, 5);
             Detail8Logo.Source = getImage(dwr.Records[7].Weathers[0].Icon);
-            
+
+            if (searchInput.Equals(""))
+            {
+                string currentLocation = cityName.Content.ToString();
+                List<string> currentCityList = currentLocation.Split(',').ToList<string>();
+                string currentCity = currentCityList[0];
+                checkFavourite(currentCity);
+
+            }
 
         }
 

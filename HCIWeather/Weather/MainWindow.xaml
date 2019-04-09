@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Weather"
         mc:Ignorable="d"
-        Title="Weather" Height="700" Width="1000" Icon="/resources/appIcon.png" MinWidth="350" MinHeight="200">
+        Title="Weather" Height="700" Width="1000" Icon="/resources/appIcon.png" MinWidth="630" MinHeight="600">
     <Window.Resources>
         <SolidColorBrush x:Key="dailyDarkColor" Color="Black" Opacity="0.45"></SolidColorBrush>
         <SolidColorBrush x:Key="dailyLightColor" Color="Black" Opacity="0.12"></SolidColorBrush>
