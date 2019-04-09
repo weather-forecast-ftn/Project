@@ -56,7 +56,18 @@
                 </Button.ToolTip>
                 <Image x:Name="bookmarkImage" Source="/resources/favourite.png" Width="20"></Image>
             </Button>
-            <Button x:Name="refresh" Grid.Column="2" Grid.Row="0"  Click="Refresh_Click" >
+            <Button x:Name="History" Grid.Column="2" Grid.Row="0" Click="History_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        History
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="/resources/recent-history.png" Width="20"></Image>
+            </Button>
+            <Button x:Name="refresh" Grid.Column="3" Grid.Row="0"  Click="Refresh_Click" >
                 <Button.Background>
                     <SolidColorBrush Color="#5d90e2" Opacity="0.2" />
                 </Button.Background>
@@ -67,7 +78,7 @@
                 </Button.ToolTip>
                 <Image Source="/resources/refresh.png" Width="20"></Image>
             </Button>
-            
+
             <TextBox x:Name="search" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Grid.Column="5" Grid.Row="0" KeyDown="Search_KeyDown"  Foreground="White" FontSize="13" >
                 <TextBox.Background>
                     <SolidColorBrush Color="#5d90e2" Opacity="0.2" />

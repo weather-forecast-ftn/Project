@@ -15,7 +15,7 @@ namespace Weather
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private readonly string historyPath = Path.GetFullPath(@"..\..\") + @"resources\history.txt";
         private readonly string bookmarkPath = Path.GetFullPath(@"..\..\") + @"resources\bookmark.txt";
         public List<string> nameList { get; set; }
 
@@ -44,7 +44,22 @@ namespace Weather
 
             loadAPI(searchInput);
 
-            
+            //History
+            e.Handled = true;
+            History history = new History();
+
+            foreach (HistoryData item in history.getHistory())
+            {
+                if (item.CityName.Trim().ToLower().Equals(search.Text.Trim().ToLower()))
+                    break;
+            }
+
+            checkFavourite(search.Text);
+            File.AppendAllText(historyPath, search.Text.Trim() + "\n");
+            string s = DateTime.Now.ToString();
+            File.AppendAllText(historyPath, s.Trim() + "\n");
+
+
         }
 
         private void SearchClickFun(object sender, RoutedEventArgs e)
@@ -52,8 +67,21 @@ namespace Weather
             string searchInput = search.Text.Trim().ToLower();
 
             loadAPI(searchInput);
+            //History
+            e.Handled = true;
+            History history = new History();
 
-            
+            foreach (HistoryData item in history.getHistory())
+            {
+                if (item.CityName.Trim().ToLower().Equals(search.Text.Trim().ToLower()))
+                    break;
+            }
+
+            checkFavourite(search.Text);
+            File.AppendAllText(historyPath, search.Text.Trim() + "\n");
+            string s = DateTime.Now.ToString();
+            File.AppendAllText(historyPath, s.Trim() + "\n");
+
         }
 
         public static void GetLocationProperty()
@@ -523,6 +551,16 @@ namespace Weather
             List<string> currentCityList = currentLocation.Split(',').ToList<string>();
             AppInfo.Current_city = currentCityList[0];
             BookmarkWindow win2 = new BookmarkWindow();
+            win2.Show();
+            this.Close();
+        }
+
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+            string currentLocation = cityName.Content.ToString();
+            List<string> currentCityList = currentLocation.Split(',').ToList<string>();
+            AppInfo.Current_city = currentCityList[0];
+            HistoryWindow win2 = new HistoryWindow();
             win2.Show();
             this.Close();
         }

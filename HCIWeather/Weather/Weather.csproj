@@ -82,9 +82,17 @@
     <Compile Include="BookmarkWindow.xaml.cs">
       <DependentUpon>BookmarkWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="History.cs" />
+    <Compile Include="HistoryWindow.xaml.cs">
+      <DependentUpon>HistoryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WeatherProcess.cs" />
     <Compile Include="WeatherRecord.cs" />
     <Page Include="BookmarkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +182,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bookmark.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\history.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
